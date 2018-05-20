@@ -3,6 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Order;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Input;
+use Carbon\Carbon;
+use Validator;
+use Session;
+use Redirect;
+
+use App\Http\Requests\StoreOrder;
 
 class OrderController extends Controller
 {
@@ -13,7 +23,11 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        //retrieve all the orders
+        $orders = Order::all();
+
+        // return the view with all the orders
+        return View::make('orders.index')->with('orders', $orders);
     }
 
     /**
@@ -23,7 +37,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-        //
+        return View::make('orders.create');
     }
 
     /**
@@ -32,9 +46,22 @@ class OrderController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreOrder $request)
     {
-        //
+        // runs the validation code at Requests\StoreOrder
+        $validated = $request->validated();
+
+        $order = new Order;
+        $order->staff_id = Input::get('staff_id');
+        $order->customer_id = Input::get('customer_id');
+        $order->menu_id = Input::get('menu_id');
+        // $order->menu_items = todo;
+        $order->save();
+
+        // redirect
+        Session::flash('message', 'Successfully created Post');
+        return Redirect::to('orders/')
+            ->with('order', $order);
     }
 
     /**
@@ -45,7 +72,9 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        //
+        $order = Order::find($id);
+        return View::make('orders.show')
+            ->with('order', $order);
     }
 
     /**
@@ -56,7 +85,9 @@ class OrderController extends Controller
      */
     public function edit($id)
     {
-        //
+        $order = Order::find($id);
+        return View::make('orders.edit')
+            ->with('order', $order);
     }
 
     /**
@@ -68,7 +99,15 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $order = Order::find($id);
+        $order->staff_id = Input::get('staff_id');
+        $order->customer_id = Input::get('customer_id');
+        $order->menu_id = Input::get('menu_id');
+        $order->save();
+
+        Session::flash('message', 'Order Updated');
+        return Redirect::to('orders.show')
+            ->with('order', $order);
     }
 
     /**
@@ -79,6 +118,10 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $order = Order::find($id);
+        $order->delete();
+
+        Session::flash('message', 'Order Deleted');
+        return Redirect::to('orders');
     }
 }

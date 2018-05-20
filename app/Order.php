@@ -12,21 +12,32 @@ class Order extends Model
     protected $fillable = [ 
         'id',
         'staff_id',
-        'user_id',
+        'customer_id',
         'menu_id',
+
     ];
+
+    // staff belong to many orders - order belongs to one staff
     public function staff()
     {
         return $this->belongsTo('App\staff');
     }
 
-    public function user()
+    // order belongs to one customer - customer belongs to many orders
+    public function customer()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\Customer');
     }
 
+    // Order belongs to one menu
     public function menu()
     {
         return $this->belongsTo('App\Menu');
+    }
+    
+    // Order belongs to many menu_items - menu_item belongs to many orders
+    public function menu_items()
+    {
+        return $this->belongsToMany('App\MenuItem', 'order_menu_item')->as('order');
     }
 }
