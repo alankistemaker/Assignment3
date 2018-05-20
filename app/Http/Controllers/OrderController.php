@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Order;
+use App\MenuItem;
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Input;
@@ -55,11 +57,15 @@ class OrderController extends Controller
         $order->staff_id = Input::get('staff_id');
         $order->customer_id = Input::get('customer_id');
         $order->menu_id = Input::get('menu_id');
-        // $order->menu_items = todo;
+    
+        // add the menu items
+        // the order must be created(saved) before any menu items can be attached
+        $order->save();
+        $order->menu_items()->attach(Input::get('menu_item'));
         $order->save();
 
         // redirect
-        Session::flash('message', 'Successfully created Post');
+        Session::flash('message', 'Successfully created Order');
         return Redirect::to('orders/')
             ->with('order', $order);
     }
@@ -72,9 +78,11 @@ class OrderController extends Controller
      */
     public function show($id)
     {
+        $menu_items = MenuItem::pluck('name', 'id');
         $order = Order::find($id);
         return View::make('orders.show')
-            ->with('order', $order);
+            ->with('order', $order)
+            ->with('menu_items', $menu_items);
     }
 
     /**
@@ -103,6 +111,8 @@ class OrderController extends Controller
         $order->staff_id = Input::get('staff_id');
         $order->customer_id = Input::get('customer_id');
         $order->menu_id = Input::get('menu_id');
+        // add the menu items
+        $order->menu_items()->attach(Input::get('menu_item'));
         $order->save();
 
         Session::flash('message', 'Order Updated');
@@ -119,9 +129,29 @@ class OrderController extends Controller
     public function destroy($id)
     {
         $order = Order::find($id);
+        $order->menu_items()->detach();
         $order->delete();
 
         Session::flash('message', 'Order Deleted');
         return Redirect::to('orders');
+    }
+
+    public function addMenuItem($id)
+    {
+        $menu_items = MenuItem::pluck('name', 'id');
+        $order = Order::find($id);
+        $order->menu_items()->attach(Input::get('menu_item_id'));
+        $order->save();
+
+        Session::flash('message', 'Item added to order!');
+        return Redirect::to('orders/' . $order->id);
+        //return View::make('orders.show')
+        //    ->with('order', $order)
+        //    ->with('menu_items', $menu_items);
+    }
+
+    public function removeMenuItem($id)
+    {
+        // todo
     }
 }

@@ -20,3 +20,6 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('orders', 'OrderController');
+
+Route::put('addmenuitemtoorder/{id}', 'OrderController@addMenuItem')->name('addmenuitemtoorder');
+Route::get('addmenuitemtoorder/{id}', 'OrderController@addMenuItem');

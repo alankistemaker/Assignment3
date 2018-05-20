@@ -28,6 +28,10 @@
             {{ Form::label('menu_id', 'Menu ID') }}
             {{ Form::text('menu_id', null, array('class' => 'form-control')) }}
          </div>
+         <div>
+            {{ Form::label('menu_item', 'Menu Item ID') }}
+            {{ Form::text('menu_item', null, array('class' => 'form-control')) }}
+         </div>
 
          {{ Form::submit('Create the Order!', array('class' => 'btn btn-primary')) }} 
          {{ Form::close() }} 

@@ -22,8 +22,11 @@
                <tr>
                   <th>Order ID</th>
                   <th>Staff ID</th>
+                  <th>Staff Name</th>
                   <th>Customer ID</th>
+                  <th>Customer Name</th>
                   <th>Menu ID</th>
+                  <th>Menu Name</th>
                   <th>Created At</th>
                   <th>Last Updated</th>
                </tr>
@@ -33,18 +36,19 @@
                <tr>
                   <td>{{ $value->id }}</td>
                   <td>{{ $value->staff_id }}</td>
+                  <td>{{ $value->staff->name }}</td>
                   <td>{{ $value->customer_id }}</td>
+                  <td>{{ $value->customer->name }}</td>
                   <td>{{ $value->menu_id }}</td>
+                  <td>{{ $value->menu->name }}</td>
                   <td>{{ $value->created_at }}</td>
                   <td>{{ $value->updated_at }}</td>
                   <!-- we will also add show, edit, and delete buttons -->             
                   <td>
                      <!-- delete the country (uses the destroy method DESTROY /country/{id} -->                 
-                     {{ Form::open(array('url' => 'orders/' .
-                     $value->id, 'class' => 'pull-right')) }}
+                     {{ Form::open(array('url' => 'orders/' . $value->id, 'class' => 'pull-right')) }}
                      {{ Form::hidden('_method', 'DELETE') }}
-                     {{ Form::submit('Delete this Order',
-                     array('class' => 'btn btn-warning')) }}
+                     {{ Form::submit('Delete this Order', array('class' => 'btn btn-warning')) }}
                      {{ Form::close() }}
 
                      <!-- Show the restaurant (uses the show method found at GET /countries/{id} -->                 

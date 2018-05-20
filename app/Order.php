@@ -38,6 +38,6 @@ class Order extends Model
     // Order belongs to many menu_items - menu_item belongs to many orders
     public function menu_items()
     {
-        return $this->belongsToMany('App\MenuItem', 'order_menu_item')->as('order');
+        return $this->belongsToMany('App\MenuItem', 'order_menu_items')->as('order');
     }
 }
