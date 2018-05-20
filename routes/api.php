@@ -16,3 +16,9 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('menus', 'CUDMenuAPIController@index');
+Route::get('menus/show', 'CUDMenuAPIController@show');
+Route::post('menus/store', 'CUDMenuAPIController@store');
+Route::put('menus/update', 'CUDMenuAPIController@update');
+Route::delete('menus/destroy', 'CUDMenuAPIController@destroy');
