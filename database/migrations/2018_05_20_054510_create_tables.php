@@ -16,7 +16,7 @@ class CreateTables extends Migration
         Schema::create('staff', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
-            $table->string('name');
+            $table->string('name')->unique();
             $table->integer('phone');
         });
         Schema::create('users', function (Blueprint $table) {

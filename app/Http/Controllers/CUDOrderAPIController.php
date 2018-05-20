@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\User;
+use App\Order;
 
-class CUDUserAPIController extends Controller
+class CUDOrderAPIController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class CUDUserAPIController extends Controller
      */
     public function index()
     {
-        return User::all();
+        return Order::all();
     }
 
     /**
@@ -35,8 +35,8 @@ class CUDUserAPIController extends Controller
      */
     public function store(Request $request)
     {
-        $user = User::create($request->all());
-        return response()->json($user, 201);
+        $order = Order::create($request->all());
+        return response()->json($order, 201);
     }
 
     /**
@@ -47,8 +47,8 @@ class CUDUserAPIController extends Controller
      */
     public function show(Request $request)
     {
-        $user = User::find($request['id']);
-        return response()->json($user, 200);
+        $order = Order::find($request['id']);
+        return response()->json($order, 200);
     }
 
     /**
@@ -71,9 +71,9 @@ class CUDUserAPIController extends Controller
      */
     public function update(Request $request)
     {
-        $user = User::find($request['id']);
-        $user->update($request->all());
-        return response()->json($user, 201);
+        $order = Order::find($request['id']);
+        $order->update($request->all());
+        return response()->json($order, 201);
     }
 
     /**
@@ -84,8 +84,8 @@ class CUDUserAPIController extends Controller
      */
     public function destroy(Request $request)
     {
-        $user = User::find($request['id']);
-        $user->delete();
+        $order = Order::find($request['id']);
+        $order->delete();
         return response()->json(null, 204);
     }
 }

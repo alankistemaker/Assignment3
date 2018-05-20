@@ -3,9 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\User;
+use App\Staff;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\View;
+use Carbon\Carbon;
+use Validator;
+use Input;
+use Session;
+use Redirect;
 
-class CUDUserAPIController extends Controller
+class CUDStaffAPIController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +21,7 @@ class CUDUserAPIController extends Controller
      */
     public function index()
     {
-        return User::all();
+        return Staff::all();
     }
 
     /**
@@ -35,8 +42,8 @@ class CUDUserAPIController extends Controller
      */
     public function store(Request $request)
     {
-        $user = User::create($request->all());
-        return response()->json($user, 201);
+        $staff = Staff::create($request->all());
+        return response()->json($staff, 201);
     }
 
     /**
@@ -47,8 +54,8 @@ class CUDUserAPIController extends Controller
      */
     public function show(Request $request)
     {
-        $user = User::find($request['id']);
-        return response()->json($user, 200);
+        $staff = Staff::find($request['id']);
+        return response()->json($staff, 200);
     }
 
     /**
@@ -71,9 +78,9 @@ class CUDUserAPIController extends Controller
      */
     public function update(Request $request)
     {
-        $user = User::find($request['id']);
-        $user->update($request->all());
-        return response()->json($user, 201);
+        $staff = Staff::find($request['id']);
+        $staff->update($request->all());
+        return response()->json($staff, 201);
     }
 
     /**
@@ -84,8 +91,8 @@ class CUDUserAPIController extends Controller
      */
     public function destroy(Request $request)
     {
-        $user = User::find($request['id']);
-        $user->delete();
+        $staff = Staff::find($request['id']);
+        $staff->delete();
         return response()->json(null, 204);
     }
 }

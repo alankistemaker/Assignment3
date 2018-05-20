@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\User;
+use App\Customer;
 
-class CUDUserAPIController extends Controller
+class CUDCustomerAPIController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class CUDUserAPIController extends Controller
      */
     public function index()
     {
-        return User::all();
+        return Customer::all();
     }
 
     /**
@@ -35,8 +35,8 @@ class CUDUserAPIController extends Controller
      */
     public function store(Request $request)
     {
-        $user = User::create($request->all());
-        return response()->json($user, 201);
+        $customer = Customer::create($request->all());
+        return response()->json($customer, 201);
     }
 
     /**
@@ -47,8 +47,8 @@ class CUDUserAPIController extends Controller
      */
     public function show(Request $request)
     {
-        $user = User::find($request['id']);
-        return response()->json($user, 200);
+        $customer = Customer::find($request['id']);
+        return response()->json($customer, 200);
     }
 
     /**
@@ -71,9 +71,9 @@ class CUDUserAPIController extends Controller
      */
     public function update(Request $request)
     {
-        $user = User::find($request['id']);
-        $user->update($request->all());
-        return response()->json($user, 201);
+        $customer = Customer::find($request['id']);
+        $customer->update($request->all());
+        return response()->json($customer, 201);
     }
 
     /**
@@ -84,8 +84,8 @@ class CUDUserAPIController extends Controller
      */
     public function destroy(Request $request)
     {
-        $user = User::find($request['id']);
-        $user->delete();
+        $customer = Customer::find($request['id']);
+        $customer->delete();
         return response()->json(null, 204);
     }
 }
