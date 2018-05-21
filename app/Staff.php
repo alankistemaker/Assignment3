@@ -13,5 +13,11 @@ class Staff extends Model
         'id',
         'name',
         'phone',
+        'user_id'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
 }

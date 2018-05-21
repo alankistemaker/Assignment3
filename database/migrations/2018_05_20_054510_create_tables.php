@@ -13,22 +13,22 @@ class CreateTables extends Migration
      */
     public function up()
     {
-        Schema::create('staff', function (Blueprint $table) {
-            $table->increments('id');
-            $table->timestamps();
-            $table->string('name')->unique();
-            $table->integer('phone');
-        });
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->unsignedInteger('staff_id');
-            $table->index('staff_id');
-            $table->foreign('staff_id')->references('id')->on('staff');
             $table->rememberToken();
             $table->timestamps();
+        });
+        Schema::create('staff', function (Blueprint $table) {
+            $table->increments('id');
+            $table->timestamps();
+            $table->string('name')->unique();
+            $table->integer('phone');
+            $table->unsignedInteger('user_id');
+            $table->index('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
         });
         Schema::create('password_resets', function (Blueprint $table) {
             $table->string('email')->index();

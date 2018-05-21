@@ -18,4 +18,14 @@ class Customer extends Model
         'address2',
         'state',
     ];
+
+    public function orders()
+    {
+        return $this->hasMany('App\Order');
+    }
+
+    public function bookings()
+    {
+        return $this->hasMany('App\Booking');
+    }
 }

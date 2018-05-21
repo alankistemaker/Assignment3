@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Order;
 use App\MenuItem;
+use App\Menu;
+use App\Staff;
+use App\Customer;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
@@ -39,7 +42,13 @@ class OrderController extends Controller
      */
     public function create()
     {
-        return View::make('orders.create');
+        $staff = Staff::pluck('name', 'id');
+        $customers = Customer::pluck('name', 'id');
+        $menus = Menu::pluck('name', 'id');
+        return View::make('orders.create')
+            ->with('staff', $staff)
+            ->with('customers', $customers)
+            ->with('menus', $menus);
     }
 
     /**

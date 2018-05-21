@@ -20,7 +20,7 @@ class Order extends Model
     // staff belong to many orders - order belongs to one staff
     public function staff()
     {
-        return $this->belongsTo('App\staff');
+        return $this->belongsTo('App\Staff');
     }
 
     // order belongs to one customer - customer belongs to many orders

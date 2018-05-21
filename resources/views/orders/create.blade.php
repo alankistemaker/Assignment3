@@ -18,19 +18,15 @@
          {{ Form::open(array('url' => 'orders')) }}
          <div class="form-group">
             {{ Form::label('staff_id', 'Staff ID') }}         
-            {{ Form::text('staff_id', null, array('class' => 'form-control')) }}     
+            {{ Form::select('staff_id', $staff, null, array('class' => 'form-control')) }}     
          </div>
          <div>
             {{ Form::label('customer_id', 'Customer ID') }}
-            {{ Form::text('customer_id', null, array('class' => 'form-control')) }}
+            {{ Form::select('customer_id', $customers, null, array('class' => 'form-control')) }}
          </div>
          <div>
             {{ Form::label('menu_id', 'Menu ID') }}
-            {{ Form::text('menu_id', null, array('class' => 'form-control')) }}
-         </div>
-         <div>
-            {{ Form::label('menu_item', 'Menu Item ID') }}
-            {{ Form::text('menu_item', null, array('class' => 'form-control')) }}
+            {{ Form::select('menu_id', $menus, null, array('class' => 'form-control')) }}
          </div>
 
          {{ Form::submit('Create the Order!', array('class' => 'btn btn-primary')) }} 
