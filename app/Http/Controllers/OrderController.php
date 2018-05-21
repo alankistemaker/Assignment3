@@ -150,8 +150,15 @@ class OrderController extends Controller
         //    ->with('menu_items', $menu_items);
     }
 
-    public function removeMenuItem($id)
+    public function removeMenuItem($order_id, $menu_item_id)
     {
-        // todo
+        // find the menuitem
+        $menu_item = MenuItem::find( $menu_item_id );
+        $order = Order::find( $order_id );
+
+        $order->menu_items()->detach($menu_item);
+
+        Session::flash('message', 'Item removed from order');
+        return Redirect::to('orders/' . $order->id);
     }
 }

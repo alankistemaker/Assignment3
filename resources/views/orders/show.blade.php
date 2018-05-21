@@ -55,11 +55,7 @@
                     <td>{{ $value->price }}</td>
                     <td>{{ $value->menu_id }}</td>
                     <td>            
-                     {{ Form::open(array('url' => 'orders/' . $value->id, 'class' => 'pull-right')) }}
-                     {{ Form::hidden('_method', 'DELETE') }}
-                     {{ Form::submit('Delete ', array('class' => 'btn btn-warning')) }}
-                     {{ Form::close() }}
-
+                     <a class="btn btn-small btn-success" href="{{ URL::to('removemenuitemfromorder/' . $order->id . '/' . $value->id) }}">Delete</a>
                      <!-- Show the menu item (uses the show method found at GET /menuitems/{id} -->                 
                      <a class="btn btn-small btn-success" href="{{ URL::to('menuitems/' . $value->id) }}">Show </a> 
 

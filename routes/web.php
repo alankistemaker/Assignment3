@@ -23,3 +23,6 @@ Route::resource('orders', 'OrderController');
 
 Route::put('addmenuitemtoorder/{id}', 'OrderController@addMenuItem')->name('addmenuitemtoorder');
 Route::get('addmenuitemtoorder/{id}', 'OrderController@addMenuItem');
+
+Route::put('removemenuitemfromorder/{order_id}/{menu_item_id}', 'OrderController@removeMenuItem')->name('removemenuitemfromorder');
+Route::get('removemenuitemfromorder/{order_id}/{menu_item_id}', 'OrderController@removeMenuItem');
