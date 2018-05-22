@@ -65,7 +65,13 @@ class OrderController extends Controller
         $order = new Order;
         $order->staff_id = Input::get('staff_id');
         $order->customer_id = Input::get('customer_id');
-        $order->menu_id = Input::get('menu_id');
+        if (Input::get('takeaway') == 'Takeaway')
+        {
+            $order->takeaway = true;
+        } else {
+            $order->takeaway = false;
+        }
+        
     
         // add the menu items
         // the order must be created(saved) before any menu items can be attached
@@ -89,8 +95,10 @@ class OrderController extends Controller
     {
         $menu_items = MenuItem::pluck('name', 'id');
         $order = Order::find($id);
+        $menus = Menu::all();
         return View::make('orders.show')
             ->with('order', $order)
+            ->with('menus', $menus)
             ->with('menu_items', $menu_items);
     }
 
@@ -149,7 +157,12 @@ class OrderController extends Controller
     {
         $menu_items = MenuItem::pluck('name', 'id');
         $order = Order::find($id);
-        $order->menu_items()->attach(Input::get('menu_item_id'));
+        $menus = Menu::all();
+        foreach($menus as $menu => $value)
+        {
+            $order->menu_items()->attach( Input::get('menu' . $value->id) );
+        }
+        // $order->menu_items()->attach(Input::get('menu_item_id'));
         $order->save();
 
         Session::flash('message', 'Item added to order!');

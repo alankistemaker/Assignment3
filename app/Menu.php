@@ -18,4 +18,9 @@ class Menu extends Model
     {
         return $this->hasMany('App\Order');
     }
+
+    public function menu_items()
+    {
+        return $this->hasMany('App\MenuItem');
+    }
 }

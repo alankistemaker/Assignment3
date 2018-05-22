@@ -12,7 +12,7 @@
                 <li><a href="{{ URL::to('orders/create') }}">Create a new Order</a></li>
             </ul>
         </nav>
-        <h1>Showing details about Order# {{ $order->id }}</h1>
+        <h1>Showing details about Order #{{ $order->id }}</h1>
         <table class="table table-striped tabled-bordered">
             <thead>
             <tr>
@@ -20,7 +20,8 @@
                 <th>StaffID</th>
                 <th>Staff Name</th>
                 <th>CustomerID</th>
-                <th>MenuID</th>
+                <th>Customer Name</th>
+                <th>Customer Email</th>
             </tr>
             </thead>
             <tbody>
@@ -29,7 +30,8 @@
                 <td>{{ $order->staff_id }}</td>
                 <td>{{ $order->staff->name }}</td>
                 <td>{{ $order->customer_id }}</td>
-                <td>{{ $order->menu_id }}</td>
+                <td>{{ $order->customer->name }}</td>
+                <td>{{ $order->customer->email }}</td>
             </tr>
             </tbody>
         </table>
@@ -58,25 +60,24 @@
                      <a class="btn btn-small btn-success" href="{{ URL::to('removemenuitemfromorder/' . $order->id . '/' . $value->id) }}">Delete</a>
                      <!-- Show the menu item (uses the show method found at GET /menuitems/{id} -->                 
                      <a class="btn btn-small btn-success" href="{{ URL::to('menuitems/' . $value->id) }}">Show </a> 
-
-                     <!-- Edit this category (uses the edit method found at GET /categories/{id}/edit -->                 
-                     <a class="btn btn-small btn-info" href="{{ URL::to('menuitems/' . $value->id . '/edit') }}">Edit </a> 
                   </td>
                 </tr>
                 @endforeach
             </tbody>
-        </table>
+            </table>
         <br>
         <h4>Add Items to order #{{ $order->id }}</h4>
-         
-         {{ Html::ul($errors->all()) }}
-         {{ Form::model($order, array('route' => array('addmenuitemtoorder', $order->id), 'method' => 'PUT')) }}
-         <div>
-            {{ Form::label('menu_item', 'Menu Item') }}
-            {{ Form::select('menu_item_id', $menu_items, null, array('class' => 'form-control')) }}
-         </div>
-         {{ Form::submit('Add item to order', array('class' => 'btn btn-primary')) }} 
-         {{ Form::close() }} 
+
+        {{ Html::ul($errors->all()) }}
+         @foreach ($menus as $key => $value)
+            {{ Form::model($order, array('route' => array('addmenuitemtoorder', $order->id), 'method' => 'PUT')) }}
+        <div class="form-group">
+            {{ Form::label('menu', $value->name) }}
+            {{ Form::select('menu' . $value->id, $value->menu_items->pluck('name', 'id'), null, array('class' => 'form-control')) }}
+        </div>
+        @endforeach
+        {{ Form::submit('Add item to order', array('class' => 'btn btn-primary')) }} 
+        {{ Form::close() }} 
          </div>
     </div>
     </body>

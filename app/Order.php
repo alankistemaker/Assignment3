@@ -13,8 +13,7 @@ class Order extends Model
         'id',
         'staff_id',
         'customer_id',
-        'menu_id',
-
+        'takeaway',
     ];
 
     // staff belong to many orders - order belongs to one staff
@@ -27,12 +26,6 @@ class Order extends Model
     public function customer()
     {
         return $this->belongsTo('App\Customer');
-    }
-
-    // Order belongs to one menu
-    public function menu()
-    {
-        return $this->belongsTo('App\Menu');
     }
     
     // Order belongs to many menu_items - menu_item belongs to many orders

@@ -25,8 +25,7 @@
                   <th>Staff Name</th>
                   <th>Customer ID</th>
                   <th>Customer Name</th>
-                  <th>Menu ID</th>
-                  <th>Menu Name</th>
+                  <th>Order Type</th>
                   <th>Created At</th>
                   <th>Last Updated</th>
                </tr>
@@ -34,13 +33,23 @@
             <tbody>
                @foreach($orders as $key => $value)         
                <tr>
+               @php
+               $message = "";
+
+               if ($value->takeaway == 1)
+               {
+                   $message = "TAKEAWAY";
+               } else {
+                   $message = "DINE IN";
+               }
+
+               @endphp
                   <td>{{ $value->id }}</td>
                   <td>{{ $value->staff_id }}</td>
                   <td>{{ $value->staff->name }}</td>
                   <td>{{ $value->customer_id }}</td>
                   <td>{{ $value->customer->name }}</td>
-                  <td>{{ $value->menu_id }}</td>
-                  <td>{{ $value->menu->name }}</td>
+                  <td>{{ $message }}</td>
                   <td>{{ $value->created_at }}</td>
                   <td>{{ $value->updated_at }}</td>
                   <!-- we will also add show, edit, and delete buttons -->             
@@ -52,10 +61,7 @@
                      {{ Form::close() }}
 
                      <!-- Show the restaurant (uses the show method found at GET /countries/{id} -->                 
-                     <a class="btn btn-small btn-success" href="{{ URL::to('orders/' . $value->id) }}">Show this Order</a> 
-
-                     <!-- Edit this restaurant (uses the edit method found at GET /countries/{id}/edit -->                 
-                     <a class="btn btn-small btn-info" href="{{ URL::to('orders/' . $value->id . '/edit') }}">Edit this Order</a> 
+                     <a class="btn btn-small btn-success" href="{{ URL::to('orders/' . $value->id) }}">Show this Order</a>
                   </td>
                </tr>
                @endforeach     

@@ -4,7 +4,7 @@ use Illuminate\Database\Seeder;
 use Carbon\Carbon;
 use Faker\Factory as Faker;
 
-class MenuItemSeeder extends Seeder
+class InitialSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,7 +14,63 @@ class MenuItemSeeder extends Seeder
     public function run()
     {
         $faker = Faker::create('en_US');
+
+        /*
+                Customer Seeders
+        */
+        // Create 10 customers
+        for ($i = 0; $i < 10; $i++)
+        {
+            DB::table('customers')->insert([
+                'name'      => $faker->name(),
+                'phone'     => rand(000000000, 999999999),
+                'email'     => $faker->email,
+                'address1'  => $faker->streetAddress,
+                'address2'  => $faker->secondaryAddress,
+                'state'     => $faker->stateAbbr,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]);
+        }
+
+        /*
+                Menu Seeders
+        */
+        DB::table('menus')->insert([
+            'created_at' =>Carbon::now(),
+            'updated_at' =>Carbon::now(),
+            'name' => 'Breakfast',
+            'desc' => 'Breakfast Menu'
+        ]);
+
+        DB::table('menus')->insert([
+            'created_at' =>Carbon::now(),
+            'updated_at' =>Carbon::now(),
+            'name' => 'Lunch',
+            'desc' => 'Lunch Menu'
+        ]);
+        DB::table('menus')->insert([
+            'created_at' =>Carbon::now(),
+            'updated_at' =>Carbon::now(),
+            'name' => 'Dinner',
+            'desc' => 'Dinner Menu'
+        ]);
+        DB::table('menus')->insert([
+            'created_at' =>Carbon::now(),
+            'updated_at' =>Carbon::now(),
+            'name' => 'Drinks',
+            'desc' => 'Drinks Menu'
+        ]);
+        DB::table('menus')->insert([
+            'created_at' =>Carbon::now(),
+            'updated_at' =>Carbon::now(),
+            'name' => 'Desert',
+            'desc' => 'Desert Menu'
+        ]);
         
+        /*
+                Menu Item Seeders
+        */
         // Dinner Menu Items
         DB::table('menu_items')->insert([
             'name'              => 'Pasta',
@@ -25,6 +81,7 @@ class MenuItemSeeder extends Seeder
             'cost'              => 7,
             'price'             => 15,
             'menu_id'           => 3,
+            'takeaway'          => false,
         ]);
         DB::table('menu_items')->insert([
             'name'              => '300g Porterhouse',
@@ -35,6 +92,7 @@ class MenuItemSeeder extends Seeder
             'cost'              => 7,
             'price'             => 15,
             'menu_id'           => 3,
+            'takeaway'          => false,
         ]);
 
         // Lunch Menu Items
@@ -47,6 +105,7 @@ class MenuItemSeeder extends Seeder
             'cost'              => 7,
             'price'             => 15,
             'menu_id'           => 2,
+            'takeaway'          => true,
         ]);
         DB::table('menu_items')->insert([
             'name'              => 'Pasta',
@@ -57,6 +116,7 @@ class MenuItemSeeder extends Seeder
             'cost'              => 7,
             'price'             => 15,
             'menu_id'           => 2,
+            'takeaway'          => true,
         ]);
 
         // Breakfast Menu Items
@@ -69,6 +129,7 @@ class MenuItemSeeder extends Seeder
             'cost'              => 4,
             'price'             => 8,
             'menu_id'           => 1,
+            'takeaway'          => false,
         ]);
         DB::table('menu_items')->insert([
             'name'              => 'Toast',
@@ -79,9 +140,9 @@ class MenuItemSeeder extends Seeder
             'cost'              => 2,
             'price'             => 7,
             'menu_id'           => 1,
+            'takeaway'          => false,
         ]);
 
-        // Takeaway Menu Items
         DB::table('menu_items')->insert([
             'name'              => 'Hot Chips',
             'instock'           => 30,
@@ -91,6 +152,7 @@ class MenuItemSeeder extends Seeder
             'cost'              => 1,
             'price'             => 4,
             'menu_id'           => 4,
+            'takeaway'          => true,
         ]);
         DB::table('menu_items')->insert([
             'name'              => 'Beef Pie',
@@ -100,7 +162,24 @@ class MenuItemSeeder extends Seeder
             'updated_at'        => Carbon::now(),
             'cost'              => 2,
             'price'             => 4,
-            'menu_id'           => 4,
+            'menu_id'           => 2,
+            'takeaway'          => true,
+        ]);
+        /*
+                User Seeder
+        */
+        DB::table('users')->insert([
+            'name'      => 'Admin',
+            'email'     => 'admin@email.com',
+            'password'  => 'password',
+        ]);
+        /*
+                Staff seeder
+        */
+        DB::table('staff')->insert([
+            'name'      => $faker->name(),
+            'phone'     => '555' . rand(001, 999),
+            'user_id'   => 1,
         ]);
     }
 }

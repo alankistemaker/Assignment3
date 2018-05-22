@@ -69,11 +69,11 @@ class CreateTables extends Migration
             $table->index('staff_id');
             $table->unsignedInteger('customer_id');
             $table->index('customer_id');
-            $table->unsignedInteger('menu_id');
-            $table->index('menu_id');
+            //$table->unsignedInteger('menu_id');
+            //$table->index('menu_id');
             $table->foreign('staff_id')->references('id')->on('staff');
             $table->foreign('customer_id')->references('id')->on('customers');
-            $table->foreign('menu_id')->references('id')->on('menus');
+            //$table->foreign('menu_id')->references('id')->on('menus');
         });
     }
 
